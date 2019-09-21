@@ -1,0 +1,20 @@
+{
+  "name": "sportvisualization",
+  "version": "1.0.0",
+  "description": "A Node.js and Vue.js web application for sports visualization",
+  "main": "server.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "client": "npm run serve --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "author": "Isaias Cuevas, Henry Garcia, Ahfaz Zaman",
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^4.1.2",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.2"
+  }
+}
