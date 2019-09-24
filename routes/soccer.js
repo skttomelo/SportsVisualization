@@ -4,8 +4,7 @@ const fetch = require("node-fetch");
 router.get("/score", async (req, res) => {
   try {
     const response = await fetch(
-      `https://allsportsapi.com/api/football/?met=Livescore&APIkey=${process.env.API_KEY}`
-      //https://allsportsapi.com/api/football/?met=&APIkey=!_your_account_APIkey_!
+      `https://allsportsapi.com/api/football/?met=Fixtures&APIkey=${process.env.API_KEY}&from=2019-08-23&to=2019-09-23`
     );
     const data = await response.json();
 
