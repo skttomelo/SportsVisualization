@@ -1,31 +1,19 @@
 <template>
   <div>
-    <h1>Soccer</h1>
+    <SoccerGames />
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import SoccerGames from "./subcomponents/SoccerGames";
+//import h337 from "heatmap.js";
 export default {
   name: "Soccer",
-  data() {
-    return {
-      loading: false,
-      error: null,
-      data: null
-    };
+  components: {
+    SoccerGames
   },
-  async created() {
-    this.loading = true;
-
-    try {
-      const data = await axios("/api/soccer/score");
-      this.data = data.data.result;
-      this.loading = false;
-      console.log(data);
-    } catch (err) {
-      this.loading = false;
-    }
+  data() {
+    return {};
   }
 };
 </script>
