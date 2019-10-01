@@ -64,13 +64,10 @@ export default {
     //NOTE: I NEED TO FIGURE OUT HOW TO COMBINE THE INFORMATION I WANT TO CONTAIN IN THE MODAL
     show(num) {
       this.$modal.show("match-stats");
-
       this.id = num;
-      console.log(num);
     },
     hide() {
       this.$modal.hide("hello-world");
-      console.log("hide");
     }
   },
   async created() {
