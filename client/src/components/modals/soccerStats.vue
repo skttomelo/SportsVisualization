@@ -9,17 +9,22 @@
     :adaptive="true"
     :scrollable="true"
     :reset="true"
-    width="80%"
+    width="45%"
     height="auto"
     @before-open="beforeOpen"
     @before-close="beforeClose"
   >
     <div class="size-modal-content">
-      <h3>
-        {{stats.event_away_team}}
-        vs
-        {{stats.event_home_team}}
-      </h3>
+      <table>
+        <tr>
+          <th><h3>{{stats.event_away_team}}</h3></th>
+          <th><h3>vs</h3></th>
+          <th>{{stats.event_home_team}}</th>
+        </tr>
+        <tr>
+          <td>{{getTeam(stats.away_team_key).players[0]}}</td>
+        </tr>
+      </table>
       <div>{{stats.event_key}}</div>
       <h4 style></h4>
     </div>
@@ -31,11 +36,21 @@ export default {
   data() {
     return {};
   },
-  props: ["stats"],
+  props: ["stats", "teams"],
   methods: {
     beforeOpen() {},
-    beforeClose() {}
-  }
+    beforeClose() {},
+    getTeam(team_key) {
+      let group;
+      this.$props.teams.forEach((team) => {
+        if(team.team_key == team_key){
+          group = team;
+          return;
+        }
+      });
+      return group;
+    }
+  },
 };
 </script>
 <style>

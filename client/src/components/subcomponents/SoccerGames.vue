@@ -32,11 +32,11 @@
 
           <div style="grid-row: 2/3; grid-column: 1/4;">
             <hr />
-            <button class="myButton" v-on:click="show(i)">Expand</button>
+            <button class="myButton" v-on:click="show(i, i.away_team_key, i.home_team_key)">Expand</button>
           </div>
         </div>
 
-        <soccerStats v-bind:stats="id"></soccerStats>
+        <soccerStats v-bind:stats="id" v-bind:teams="this.teams"></soccerStats>
       </div>
     </div>
   </div>
@@ -56,6 +56,7 @@ export default {
       loading: false,
       error: null,
       data: [],
+      teams: [],
       selected: 5,
       id: 0
     };
@@ -76,6 +77,43 @@ export default {
     try {
       const data = await axios("/api/soccer/score");
       this.data = data.data.result;
+      let away_exist = false;
+      let home_exist = false;
+      let used_teams = [];
+      // gather all individual team's json
+      this.data.forEach((match) =>{
+        away_exist = false;
+        home_exist = false;
+        if(this.used_teams.length != 0){
+          /*
+          We want to check if any of the current teams inside of this.teams contain either of the team keys from a match.
+          If teams does not have a team within it that contains either the away team key or the home team key then we want
+          to request the data for the team so that we can put it into teams.
+          */
+          this.used_teams.forEach((team) =>{
+            // match.home_team_key and match.away_team_key
+            if(team == match.home_team_key){
+              away_exist = true;
+            }else if(team == match.away_team_key){
+              home_exist = true;
+            }
+          });
+        }
+        
+        if(!away_exist){
+          used_teams.push(match.away_team_key);
+        }
+        if(!home_exist){
+          used_teams.push(match.home_team_key);
+        }
+      });
+
+      used_teams.forEach(async (team) =>{
+        let team_data = await axios(`api/soccer/team/${team}`);
+        team_data = team_data.data.result;
+        this.teams.push(team_data);
+      });
+
       this.loading = false;
     } catch (err) {
       this.loading = false;

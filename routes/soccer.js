@@ -32,4 +32,22 @@ router.get("/compare/:team1/:team2", async (req, res) => {
   }
 });
 
+//gets team json data with team key
+router.get("/team/:teamkey", async (req,res) => {
+  const { teamkey } = req.params;
+  try{
+    const response = await fetch(
+      `https://allsportsapi.com/api/football/?&met=Teams&teamId=${teamkey}&APIkey=${process.env.API_KEY}`
+    );
+    const data = await response.json();
+
+    res.json(data);
+  } catch(err){
+    console.log(err);
+    console.log(teamkey);
+    res.status(500);
+    res.json({ message: "Server Error" });
+  }
+});
+
 module.exports = router;
